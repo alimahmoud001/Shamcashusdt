@@ -1,5 +1,3 @@
-# Shamcashusdt
-
 
 <html lang="ar" dir="rtl">
 <head>
