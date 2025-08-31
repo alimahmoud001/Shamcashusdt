@@ -1,1007 +1,823 @@
-
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نظام تحويل العملات الرقمية في سورية</title>
+    <title>نظام بيع وشراء USDT - شام كاش</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #1a365d;
-            --secondary: #2c5282;
-            --accent: #38a169;
-            --light: #f7fafc;
-            --dark: #1a202c;
-            --danger: #e53e3e;
-            --warning: #dd6b20;
-            --light-blue: #e3f2fd;
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
         }
         
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-            font-family: 'Tajawal', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
-            background: linear-gradient(135deg, #f0f4f8, #d6e4f0);
-            color: var(--dark);
-            min-height: 100vh;
-            padding: 20px;
-            line-height: 1.7;
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            padding: 0;
+            margin: 0;
         }
         
         .container {
-            max-width: 280px;
-            margin: 2 auto;
-            background-color: white;
-            border-radius: 15px;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.18);
-            overflow: hidden;
+            max-width: 380px;
+            margin: 0 auto;
+            padding: 10px;
         }
         
         header {
-            background: linear-gradient(to right, var(--primary), var(--secondary));
+            background: linear-gradient(135deg, var(--primary-color), #1a2530);
             color: white;
-            padding: 30px 25px;
+            padding: 15px;
             text-align: center;
-            position: relative;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
         
-        header h1 {
-            font-size: 2.1rem;
-            margin-bottom: 12px;
-            font-weight: 700; /* زيادة سمك خط العنوان */
-            letter-spacing: -0.5px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        h1, h2, h3 {
+            margin-bottom: 10px;
         }
         
-        header p {
-            font-size: 1.1rem;
-            opacity: 0.9;
-            font-weight: 500; /* زيادة سمك خط الوصف */
-        }
-        
-        .logo {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 18px;
+        .card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            padding: 15px;
             margin-bottom: 15px;
         }
         
-        .logo i {
-            font-size: 3rem;
-            background: rgba(255, 255, 255, 0.15);
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-        }
-        
-        .form-container {
-            padding: 30px;
-        }
-        
-        .section {
-            margin-bottom: 35px;
-            padding-bottom: 25px;
-            border-bottom: 1px solid #e2e8f0;
-        }
-        
-        .section-title {
-            font-size: 1.5rem;
-            color: var(--primary);
-            margin-bottom: 25px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            font-weight: 700; /* زيادة سمك خط العنوان */
-            padding-bottom: 10px;
-            border-bottom: 2px solid var(--light-blue);
-        }
-        
-        .section-title i {
-            background-color: #ebf8ff;
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--primary);
-            font-size: 1.3rem;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.08);
-        }
-        
         .form-group {
-            margin-bottom: 25px;
+            margin-bottom: 15px;
         }
         
         label {
             display: block;
-            margin-bottom: 10px;
-            font-weight: 600; /* زيادة سمك خط التسميات */
-            color: var(--dark);
-            font-size: 1.05rem;
+            margin-bottom: 6px;
+            font-weight: bold;
+            color: var(--dark-color);
+            font-size: 14px;
         }
         
-        input, select, textarea {
+        input[type="text"],
+        input[type="number"],
+        input[type="email"],
+        input[type="tel"],
+        select {
             width: 100%;
-            padding: 15px;
-            border: 1px solid #cbd5e0;
-            border-radius: 10px;
-            font-size: 1.05rem;
-            transition: all 0.3s;
-            background-color: #f7fafc;
-            font-weight: 500; /* زيادة سمك خط الإدخال */
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border 0.3s;
         }
         
-        input:focus, select:focus, textarea:focus {
+        input:focus, select:focus {
+            border-color: var(--secondary-color);
             outline: none;
-            border-color: var(--secondary);
-            box-shadow: 0 0 0 4px rgba(66, 153, 225, 0.2);
-            background-color: white;
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
         }
         
-        .radio-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 18px;
-            margin-top: 10px;
-        }
-        
-        .radio-option {
-            flex: 1;
-            min-width: 140px;
-        }
-        
-        .radio-option input {
-            display: none;
-        }
-        
-        .radio-option label {
-            display: block;
-            padding: 18px 15px;
-            border: 2px solid #cbd5e0;
-            border-radius: 10px;
-            text-align: center;
+        button {
+            background: linear-gradient(135deg, var(--secondary-color), #2980b9);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
             cursor: pointer;
+            font-size: 16px;
+            width: 100%;
             transition: all 0.3s;
-            background-color: #f7fafc;
-            font-size: 1.1rem;
-            font-weight: 600; /* زيادة سمك خط الخيارات */
+            font-weight: bold;
         }
         
-        .radio-option input:checked + label {
-            border-color: var(--accent);
-            background-color: #e6fffa;
-            font-weight: 700; /* زيادة سمك الخط عند التحديد */
-            box-shadow: 0 4px 10px rgba(56, 161, 105, 0.15);
-            transform: translateY(-3px);
+        button:hover {
+            background: linear-gradient(135deg, #2980b9, var(--secondary-color));
+        }
+        
+        button:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+        }
+        
+        .result {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            border-right: 4px solid var(--secondary-color);
+            animation: fadeIn 0.5s ease-in;
         }
         
         .info-box {
-            background-color: #ebf8ff;
-            border-left: 5px solid var(--secondary);
-            padding: 20px;
-            border-radius: 10px;
-            margin-top: 25px;
-            display: none;
-        }
-        
-        .info-box.active {
-            display: block;
-            animation: fadeIn 0.5s ease;
-        }
-        
-        .info-box p {
-            margin-bottom: 12px;
-            line-height: 1.7;
-            font-size: 1.05rem;
-            font-weight: 500; /* زيادة سمك خط المعلومات */
-        }
-        
-        .copy-field {
-            background-color: white;
-            border: 1px solid #cbd5e0;
-            border-radius: 10px;
-            padding: 14px;
-            margin: 12px 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        }
-        
-        .copy-field span {
-            font-family: 'Courier New', monospace;
-            word-break: break-all;
-            font-size: 1.05rem;
-            font-weight: 500; /* زيادة سمك خط النص القابل للنسخ */
-        }
-        
-        .copy-btn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 10px 18px;
+            background-color: #e8f4fd;
             border-radius: 8px;
-            cursor: pointer;
-            transition: background 0.3s;
-            font-weight: 600; /* زيادة سمك نص زر النسخ */
-            font-size: 1rem;
-            min-width: 90px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-right: 4px solid var(--secondary-color);
         }
         
-        .copy-btn:hover {
-            background: var(--secondary);
-            transform: translateY(-2px);
-            box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+        .address-box {
+            background-color: #f9f9f9;
+            padding: 12px;
+            border-radius: 8px;
+            margin: 10px 0;
+            word-break: break-all;
+            font-family: monospace;
+            font-size: 12px;
+            border: 1px dashed #ccc;
         }
         
-        .btn {
-            display: block;
-            width: 100%;
-            padding: 18px;
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 1.15rem;
-            cursor: pointer;
-            transition: all 0.3s;
-            margin-top: 25px;
-            font-weight: 700; /* زيادة سمك نص الأزرار */
-            letter-spacing: 0.5px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
-        }
-        
-        .review-btn {
-            background: linear-gradient(to right, var(--warning), #e67e22);
-        }
-        
-        .submit-btn {
-            background: linear-gradient(to right, var(--accent), #2ecc71);
-            display: none;
-        }
-        
-        .btn:hover {
-            opacity: 0.95;
-            transform: translateY(-3px);
-            box-shadow: 0 7px 18px rgba(0,0,0,0.2);
-        }
-        
-        .btn:active {
-            transform: translateY(0);
-        }
-        
-        .summary {
-            display: none;
-            background: #f0f7ff;
-            border-radius: 12px;
-            padding: 25px;
-            margin-top: 25px;
-            border: 2px solid #c5defa;
-        }
-        
-        .summary-item {
+        .tab {
+            overflow: hidden;
+            border: 1px solid #ccc;
+            background-color: #f1f1f1;
+            border-radius: 8px 8px 0 0;
             display: flex;
-            justify-content: space-between;
-            margin-bottom: 18px;
-            padding-bottom: 18px;
-            border-bottom: 1px dashed #cbd5e0;
-            font-size: 1.1rem;
-            font-weight: 500; /* زيادة سمك خط العناصر */
         }
         
-        .summary-item span:first-child {
-            font-weight: 600; /* زيادة سمك نص التصنيفات */
-            color: var(--primary);
+        .tab button {
+            background-color: inherit;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 12px;
+            transition: 0.3s;
+            color: var(--dark-color);
+            flex: 1;
+            font-size: 14px;
+            font-weight: bold;
         }
         
-        .summary-item:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
-            font-weight: 700; /* زيادة سمك خط المجموع */
-            font-size: 1.3rem;
-            color: var(--primary);
-            margin-top: 10px;
-            padding-top: 10px;
-            border-top: 2px dashed #cbd5e0;
+        .tab button:hover {
+            background-color: #ddd;
+        }
+        
+        .tab button.active {
+            background: linear-gradient(135deg, var(--secondary-color), #2980b9);
+            color: white;
+        }
+        
+        .tabcontent {
+            display: none;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+            background-color: white;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+            font-size: 12px;
+            padding: 15px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+        
+        .telegram-link {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        .telegram-link:hover {
+            text-decoration: underline;
+        }
+        
+        .final-notice {
+            margin-top: 15px;
+            padding: 12px;
+            background-color: #fff3cd;
+            border-radius: 8px;
+            border-right: 4px solid #ffc107;
+            font-size: 14px;
+            text-align: center;
+        }
+        
+        .loader {
+            display: none;
+            border: 4px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 4px solid var(--secondary-color);
+            width: 40px;
+            height: 40px;
+            margin: 15px auto;
+            animation: spin 1s linear infinite;
         }
         
         .success-message {
-            text-align: center;
-            padding: 40px 30px;
             display: none;
-            background: #f8fff8;
-            border-radius: 12px;
-            border: 2px solid #c5fad5;
-            margin-top: 20px;
+            color: var(--success-color);
+            text-align: center;
+            margin-top: 12px;
+            font-weight: bold;
+            font-size: 14px;
         }
         
-        .success-message i {
-            font-size: 4.5rem;
-            color: var(--accent);
-            margin-bottom: 25px;
+        .error-message {
+            display: none;
+            color: var(--accent-color);
+            text-align: center;
+            margin-top: 12px;
+            font-weight: bold;
+            font-size: 14px;
         }
         
-        .success-message h2 {
-            color: var(--accent);
-            margin-bottom: 25px;
-            font-size: 2.2rem;
-            font-weight: 800; /* زيادة سمك خط عنوان النجاح */
+        .timer-message {
+            display: none;
+            color: var(--warning-color);
+            text-align: center;
+            margin-top: 12px;
+            font-weight: bold;
+            font-size: 14px;
         }
         
-        .success-message p {
-            font-size: 1.15rem;
-            margin-bottom: 25px;
-            font-weight: 500; /* زيادة سمك خط النص */
-            line-height: 1.8;
-        }
-        
-        .fee-info {
-            background: #fff8e1;
-            padding: 20px;
-            border-radius: 10px;
-            margin: 20px 0;
-            border-left: 5px solid var(--warning);
-            font-size: 1.1rem;
-            font-weight: 600; /* زيادة سمك خط معلومات العمولة */
-            box-shadow: 0 3px 8px rgba(0,0,0,0.05);
-        }
-        
-        .fee-info i {
-            color: var(--warning);
-            margin-left: 8px;
-        }
-        
-        #finalSummary {
-            background: white;
-            padding: 25px;
-            border-radius: 12px;
-            text-align: right;
-            border: 1px solid #e2e8f0;
-            margin-top: 20px;
-            font-size: 1.1rem;
-        }
-        
-        #finalSummary p {
-            margin-bottom: 15px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #eee;
-            font-weight: 500; /* زيادة سمك خط الملخص النهائي */
-        }
-        
-        #finalSummary p:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
-        }
-        
-        #finalSummary strong {
-            font-weight: 700; /* زيادة سمك الخط للكلمات البارزة */
-            color: var(--primary);
-            min-width: 160px;
-            display: inline-block;
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
         
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
         
-        @media (max-width: 768px) {
-            .radio-group {
-                flex-direction: column;
-            }
-            
-            .radio-option {
-                min-width: 100%;
-            }
-            
+        .copy-btn {
+            background: linear-gradient(135deg, #7d7d7d, #5d5d5d);
+            padding: 8px;
+            font-size: 12px;
+            margin-top: 8px;
+            width: auto;
+            display: inline-block;
+        }
+        
+        .user-info {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            border-right: 4px solid #ddd;
+        }
+        
+        /* تحسينات للجوال */
+        @media (max-width: 480px) {
             .container {
-                border-radius: 12px;
+                padding: 8px;
             }
             
             header {
-                padding: 25px 20px;
+                padding: 12px;
             }
             
-            header h1 {
-                font-size: 1.8rem;
+            h1 {
+                font-size: 18px;
             }
             
-            .form-container {
-                padding: 20px;
+            .card {
+                padding: 12px;
             }
             
-            .section-title {
-                font-size: 1.35rem;
+            input[type="text"],
+            input[type="number"],
+            input[type="email"],
+            input[type="tel"],
+            select {
+                padding: 10px;
+                font-size: 14px;
             }
             
-            .btn {
-                padding: 16px;
-                font-size: 1.1rem;
+            button {
+                padding: 12px;
+                font-size: 14px;
             }
-        }
-    
-        
-        @media (max-width: 380px) {
-            body {
+            
+            .tab button {
+                padding: 10px;
+                font-size: 12px;
+            }
+            
+            .address-box {
+                font-size: 11px;
                 padding: 10px;
             }
             
-            header {
-                padding: 20px 15px;
+            .info-box {
+                padding: 12px;
             }
             
-            header h1 {
-                font-size: 1.6rem;
+            .user-info {
+                grid-template-columns: 1fr;
+                padding: 12px;
+            }
+        }
+        
+        @media (min-width: 768px) {
+            .user-info {
+                grid-template-columns: 1fr 1fr;
             }
             
-            .logo i {
-                width: 65px;
-                height: 65px;
-                font-size: 2.5rem;
-            }
-            
-            .form-container {
-                padding: 15px;
-            }
-            
-            .section-title {
-                font-size: 1.25rem;
-            }
-            
-            .copy-btn {
-                padding: 8px 12px;
-                font-size: 0.9rem;
+            .user-info .form-group:last-child {
+                grid-column: span 2;
             }
         }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-   
-         
 </head>
 <body>
-    
     <div class="container">
         <header>
-            <div class="logo">
-                <i class="fas fa-coins"></i>
-                <div>
-                    <h1>نظام تحويل العملات الرقمية في سورية</h1>
-                    <p>تحويل USDT بوسائل الدفع المحلية</p>
-                </div>
-            </div>
+            <h1><i class="fas fa-exchange-alt"></i> نظام بيع وشراء USDT عبر شام كاش</h1>
         </header>
         
-        <div class="form-container">
-            <div class="section">
-                <h2 class="section-title"><i class="fas fa-user"></i> المعلومات الشخصية</h2>
+        <div class="card">
+            <div class="info-box">
+                <h3><i class="fas fa-info-circle"></i> معلومات مهمة</h3>
+                <p><i class="fas fa-dollar-sign"></i> سعر صرف الدولار: <strong>11000</strong> ليرة سورية</p>
+                <p><i class="fas fa-percentage"></i> العمولة: 1$ + 0.5% من المبلغ الإجمالي</p>
+            </div>
+            
+            <div class="user-info">
                 <div class="form-group">
-                    <label for="fullname">الاسم الثلاثي</label>
-                    <input type="text" id="fullname" placeholder="الاسم الكامل">
+                    <label for="userName"><i class="fas fa-user"></i> الاسم الكامل:</label>
+                    <input type="text" id="userName" required placeholder="أدخل اسمك الكامل">
                 </div>
                 
                 <div class="form-group">
-                    <label for="phone">رقم الهاتف</label>
-                    <input type="tel" id="phone" placeholder="09xxxxxxxx">
+                    <label for="userPhone"><i class="fas fa-phone"></i> رقم الهاتف:</label>
+                    <input type="tel" id="userPhone" required placeholder="أدخل رقم هاتفك">
                 </div>
                 
                 <div class="form-group">
-                    <label for="city">المدينة</label>
-                    <input type="text" id="city" placeholder="المدينة">
+                    <label for="userEmail"><i class="fas fa-envelope"></i> البريد الإلكتروني:</label>
+                    <input type="email" id="userEmail" required placeholder="أدخل بريدك الإلكتروني">
                 </div>
             </div>
             
-            <div class="fee-info">
-                <i class="fas fa-info-circle"></i>
-                <strong>نظام العمولة المحدث:</strong> 1 دولار ثابت + 0.5% من المبلغ الكامل
+            <div class="tab">
+                <button class="tablinks active" onclick="openTab(event, 'Buy')"><i class="fas fa-shopping-cart"></i> شراء USDT</button>
+                <button class="tablinks" onclick="openTab(event, 'Sell')"><i class="fas fa-coins"></i> بيع USDT</button>
             </div>
             
-            <div class="section">
-                <h2 class="section-title"><i class="fas fa-exchange-alt"></i> نوع العملية</h2>
-                <div class="radio-group">
-                    <div class="radio-option">
-                        <input type="radio" id="buy" name="transactionType" value="buy" checked>
-                        <label for="buy">شراء USDT</label>
-                    </div>
-                    <div class="radio-option">
-                        <input type="radio" id="sell" name="transactionType" value="sell">
-                        <label for="sell">بيع USDT</label>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Buy Section -->
-            <div id="buySection">
-                <div class="section">
-                    <h2 class="section-title"><i class="fas fa-shopping-cart"></i> تفاصيل الشراء</h2>
-                    
+            <div id="Buy" class="tabcontent" style="display: block;">
+                <h3><i class="fas fa-shopping-cart"></i> شراء USDT</h3>
+                <form id="buyForm">
                     <div class="form-group">
-                        <label for="buyAmount">الكمية المطلوبة (USDT)</label>
-                        <input type="number" id="buyAmount" placeholder="أدخل الكمية">
+                        <label for="buyAmount"><i class="fas fa-money-bill-wave"></i> المبلغ المراد شراءه (USDT):</label>
+                        <input type="number" id="buyAmount" step="0.01" min="1" required placeholder="أدخل المبلغ بالـ USDT">
                     </div>
                     
                     <div class="form-group">
-                        <label for="buyNetwork">اختر الشبكة</label>
-                        <select id="buyNetwork">
-                            <option value="bep20">BEP20</option>
-                            <option value="trc20">TRC20</option>
-                            <option value="erc20">ERC20</option>
-                            <option value="binance">Binance Pay</option>
+                        <label for="networkAddress"><i class="fas fa-wallet"></i> عنوان الشبكة (BEP20 فقط):</label>
+                        <input type="text" id="networkAddress" required placeholder="أدخل عنوان المحفظة BEP20">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label><i class="fas fa-money-check"></i> طريقة الدفع:</label>
+                        <select id="buyCurrency">
+                            <option value="usd">الدولار الأمريكي ($)</option>
+                            <option value="syp">الليرة السورية (SYP)</option>
                         </select>
                     </div>
                     
-                    <div class="form-group">
-                        <label for="buyAddress">العنوان (لإرسال USDT)</label>
-                        <input type="text" id="buyAddress" placeholder="أدخل عنوان المحفظة">
+                    <button type="submit"><i class="fas fa-calculator"></i> احسب المبلغ المستحق</button>
+                </form>
+                
+                <div id="buyResult" class="result">
+                    <h3><i class="fas fa-file-invoice-dollar"></i> تفاصيل عملية الشراء</h3>
+                    <p>المبلغ المراد شراءه: <span id="resultBuyAmount"></span> USDT</p>
+                    <p>العمولة: <span id="buyCommission"></span></p>
+                    <p>المبلغ الإجمالي المستحق: <span id="totalBuyAmount"></span></p>
+                    
+                    <div class="info-box">
+                        <p><i class="fas fa-info-circle"></i> يرجى تحويل المبلغ إلى عنوان شام كاش التالي:</p>
+                        <div class="address-box">be456e0ea9392db4d68a7093ee317bc8</div>
+                        <button class="copy-btn" onclick="copyToClipboard('be456e0ea9392db4d68a7093ee317bc8')"><i class="fas fa-copy"></i> نسخ العنوان</button>
+                        
+                        <p style="margin-top: 12px;">
+                            <i class="fas fa-comment"></i> بعد التحويل، يرجى إرسال صورة لقطة الشاشة إلى الدعم على Telegram: 
+                            <a href="https://t.me/ali0619000" class="telegram-link" target="_blank">@ali0619000</a>
+                        </p>
                     </div>
                     
-                    <div class="form-group">
-                        <label for="buyNotes">ملاحظات (اختياري)</label>
-                        <textarea id="buyNotes" rows="2" placeholder="أي ملاحظات إضافية"></textarea>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="paymentMethod">طريقة الدفع</label>
-                        <select id="paymentMethod">
-                            <option value="">اختر طريقة الدفع</option>
-                            <option value="sham">شام كاش</option>
-                            <option value="syriatel">سيريتل كاش</option>
-                            <option value="hawala">حوالة الهرم</option>
-                            <option value="bimo">بنك بيمو</option>
-                        </select>
-                    </div>
-                    
-                    <div class="info-box" id="shamInfo">
-                        <p>الدفع عبر شام كاش:</p>
-                        <div class="copy-field">
-                            <span>be456e0ea9392db4d68a7093ee317bc8</span>
-                            <button class="copy-btn" data-clipboard-text="be456e0ea9392db4d68a7093ee317bc8">نسخ</button>
-                        </div>
-                        <p>رقم الحساب: 5991161126028260</p>
-                    </div>
-                    
-                    <div class="info-box" id="syriatelInfo">
-                        <p>الدفع عبر سيريتل كاش:</p>
-                        <div class="copy-field">
-                            <span>0934598967</span>
-                            <button class="copy-btn" data-clipboard-text="0934598967">نسخ</button>
-                        </div>
-                    </div>
-                    
-                    <div class="info-box" id="hawalaInfo">
-                        <p>الدفع عبر حوالة الهرم:</p>
-                        <p>الاسم: علي ابراهيم محمود</p>
-                        <p>رقم الهاتف: 0934598967</p>
-                        <p>المدينة: اللاذقية</p>
-                    </div>
-                    
-                    <div class="info-box" id="bimoInfo">
-                        <p>الدفع عبر بنك بيمو:</p>
-                        <div class="copy-field">
-                            <span>060104947910013000000</span>
-                            <button class="copy-btn" data-clipboard-text="060104947910013000000">نسخ</button>
-                        </div>
-                        <p>الاسم: علي ابراهيم محمود</p>
-                    </div>
+                    <button id="sendBuyButton" onclick="sendToTelegram('buy')" style="margin-top: 12px; background: linear-gradient(135deg, #0088cc, #005c8a);">
+                        <i class="fab fa-telegram"></i> إرسال الطلب إلى Telegram
+                    </button>
                 </div>
             </div>
             
-            <!-- Sell Section -->
-            <div id="sellSection" style="display: none;">
-                <div class="section">
-                    <h2 class="section-title"><i class="fas fa-money-bill-wave"></i> تفاصيل البيع</h2>
-                    
+            <div id="Sell" class="tabcontent">
+                <h3><i class="fas fa-coins"></i> بيع USDT</h3>
+                <form id="sellForm">
                     <div class="form-group">
-                        <label for="sellAmount">الكمية المعروضة (USDT)</label>
-                        <input type="number" id="sellAmount" placeholder="أدخل الكمية">
+                        <label for="sellAmount"><i class="fas fa-money-bill-wave"></i> المبلغ المراد بيعه (USDT):</label>
+                        <input type="number" id="sellAmount" step="0.01" min="1" required placeholder="أدخل المبلغ بالـ USDT">
                     </div>
                     
                     <div class="form-group">
-                        <label for="receiveMethod">طريقة الاستلام</label>
-                        <select id="receiveMethod">
-                            <option value="">اختر طريقة الاستلام</option>
-                            <option value="syriatel">سيريتل كاش</option>
-                            <option value="hawala">حوالة الهرم</option>
-                            <option value="bimo">بنك بيمو</option>
-                            <option value="sham">شام كاش</option>
+                        <label for="shamCashAddress"><i class="fas fa-wallet"></i> عنوان شام كاش الخاص بك:</label>
+                        <input type="text" id="shamCashAddress" required placeholder="أدخل عنوان شام كاش">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label><i class="fas fa-money-check"></i> طريقة الاستلام:</label>
+                        <select id="receiveCurrency">
+                            <option value="syp">الليرة السورية (SYP)</option>
+                            <option value="usd">الدولار الأمريكي ($)</option>
                         </select>
                     </div>
                     
-                    <div class="form-group" id="bimoAccountGroup" style="display: none;">
-                        <label for="bimoAccount">رقم الحساب البنكي</label>
-                        <input type="text" id="bimoAccount" placeholder="رقم الحساب">
+                    <button type="submit"><i class="fas fa-calculator"></i> احسب المبلغ المستلم</button>
+                </form>
+                
+                <div id="sellResult" class="result">
+                    <h3><i class="fas fa-file-invoice-dollar"></i> تفاصيل عملية البيع</h3>
+                    <p>المبلغ المراد بيعه: <span id="resultSellAmount"></span> USDT</p>
+                    <p>العمولة: <span id="sellCommission"></span></p>
+                    <p>المبلغ الإجمالي المستلم: <span id="totalSellAmount"></span></p>
+                    
+                    <div class="info-box">
+                        <p><i class="fas fa-info-circle"></i> يرجى تحويل USDT إلى العنوان التالي:</p>
+                        <div class="address-box">0x2F1A184B6abBb49De547D539eDC3b5eAdc3E01F9</div>
+                        <button class="copy-btn" onclick="copyToClipboard('0x2F1A184B6abBb49De547D539eDC3b5eAdc3E01F9')"><i class="fas fa-copy"></i> نسخ العنوان</button>
+                        
+                        <p style="margin-top: 12px;">
+                            <i class="fas fa-comment"></i> بعد التحويل، يرجى إرسال صورة لقطة الشاشة إلى الدعم على Telegram: 
+                            <a href="https://t.me/ali0619000" class="telegram-link" target="_blank">@ali0619000</a>
+                        </p>
+                        <p><i class="fas fa-clock"></i> سيتم إرسال المبلغ خلال عدة دقائق بعد التأكد من التحويل.</p>
                     </div>
                     
-                    <div class="form-group" id="shamAccountGroup" style="display: none;">
-                        <label for="shamAccount">رقم الحساب أو العنوان</label>
-                        <input type="text" id="shamAccount" placeholder="رقم الحساب أو العنوان">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="sellNotes">ملاحظات (اختياري)</label>
-                        <textarea id="sellNotes" rows="2" placeholder="أي ملاحظات إضافية"></textarea>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="sellNetwork">اختر الشبكة</label>
-                        <select id="sellNetwork">
-                            <option value="">اختر شبكة الاستلام</option>
-                            <option value="bep20">BEP20</option>
-                            <option value="trc20">TRC20</option>
-                            <option value="erc20">ERC20</option>
-                            <option value="binance">Binance Pay</option>
-                        </select>
-                    </div>
-                    
-                    <div class="info-box" id="bep20Info">
-                        <p>العنوان BEP20:</p>
-                        <div class="copy-field">
-                            <span>0x21802218d8d661d66F2C7959347a6382E1cc614F</span>
-                            <button class="copy-btn" data-clipboard-text="0x21802218d8d661d66F2C7959347a6382E1cc614F">نسخ</button>
-                        </div>
-                    </div>
-                    
-                    <div class="info-box" id="trc20Info">
-                        <p>العنوان TRC20:</p>
-                        <div class="copy-field">
-                            <span>TD2LoErPRkVPBxDk72ZErtiyi6agirZQjX</span>
-                            <button class="copy-btn" data-clipboard-text="TD2LoErPRkVPBxDk72ZErtiyi6agirZQjX">نسخ</button>
-                        </div>
-                    </div>
-                    
-                    <div class="info-box" id="erc20Info">
-                        <p>العنوان ERC20:</p>
-                        <div class="copy-field">
-                            <span>0x21802218d8d661d66F2C7959347a6382E1cc614F</span>
-                            <button class="copy-btn" data-clipboard-text="0x21802218d8d661d66F2C7959347a6382E1cc614F">نسخ</button>
-                        </div>
-                    </div>
-                    
-                    <div class="info-box" id="binanceInfo">
-                        <p>Binance Pay:</p>
-                        <div class="copy-field">
-                            <span>969755964</span>
-                            <button class="copy-btn" data-clipboard-text="969755964">نسخ</button>
-                        </div>
-                    </div>
+                    <button id="sendSellButton" onclick="sendToTelegram('sell')" style="margin-top: 12px; background: linear-gradient(135deg, #0088cc, #005c8a);">
+                        <i class="fab fa-telegram"></i> إرسال الطلب إلى Telegram
+                    </button>
                 </div>
-            </div>
-            
-            <button id="reviewBtn" class="btn review-btn">مراجعة الطلب</button>
-            
-            <div class="summary" id="summarySection">
-                <h2 class="section-title"><i class="fas fa-file-invoice"></i> ملخص الطلب</h2>
-                <div class="summary-item">
-                    <span>الاسم:</span>
-                    <span id="summaryName"></span>
-                </div>
-                <div class="summary-item">
-                    <span>رقم الهاتف:</span>
-                    <span id="summaryPhone"></span>
-                </div>
-                <div class="summary-item">
-                    <span>نوع العملية:</span>
-                    <span id="summaryType"></span>
-                </div>
-                <div class="summary-item">
-                    <span>الكمية (USDT):</span>
-                    <span id="summaryAmount"></span>
-                </div>
-                <div class="summary-item">
-                    <span>عمولة التحويل (1 دولار + 0.5%):</span>
-                    <span id="summaryFee"></span>
-                </div>
-                <div class="summary-item">
-                    <span>عمولة الشبكة:</span>
-                    <span id="summaryNetworkFee"></span>
-                </div>
-                <div class="summary-item">
-                    <span>المبلغ الإجمالي (SYP):</span>
-                    <span id="summaryTotal"></span>
-                </div>
-                <div class="summary-item">
-                    <span>ملاحظات:</span>
-                    <span id="summaryNotes"></span>
-                </div>
-                <p style="margin-top: 20px; padding: 15px; background: #fff8f8; border-radius: 8px; font-weight: 600;">
-                    <i class="fas fa-info-circle"></i> عمولة التسديد على طرق التحويل المختلفة بالليرة السورية تقع على المستخدم كما تحددها هذه الجهات
-                </p>
-            </div>
-            
-            <button id="submitBtn" class="btn submit-btn">إرسال الطلب</button>
-            
-            <div class="success-message" id="successMessage">
-                <i class="fas fa-check-circle"></i>
-                <h2>تم إرسال الطلب بنجاح!</h2>
-                <p>تم إرسال تفاصيل طلبك إلى بريدنا الإلكتروني وسنتواصل معك قريبًا.</p>
-                <p>تفاصيل الطلب:</p>
-                <div id="finalSummary"></div>
             </div>
         </div>
+        
+        <div class="final-notice">
+            <i class="fas fa-exclamation-circle"></i> عند تحويل المبلغ سوف يتم اعتماد سعر صرف الدولار كما هو سعر الصرف في البنك المركزي.
+        </div>
+        
+        <div class="loader" id="loader"></div>
+        <div class="success-message" id="successMessage">
+            <i class="fas fa-check-circle"></i> تم إرسال الطلب بنجاح إلى المجموعة!
+        </div>
+        
+        <div class="error-message" id="errorMessage">
+            <i class="fas fa-exclamation-triangle"></i> حدث خطأ في الإرسال. يرجى المحاولة مرة أخرى.
+        </div>
+        
+        <div class="timer-message" id="timerMessage">
+            <i class="fas fa-clock"></i> يجب الانتظار <span id="countdown">10:00</span> دقائق قبل إرسال طلب جديد.
+        </div>
+        
+        <footer>
+            <p><i class="fas fa-headset"></i> لأي استفسار، يرجى التواصل مع الدعم على Telegram: <a href="https://t.me/ali0619000" class="telegram-link" target="_blank">@ali0619000</a></p>
+            <p><i class="fab fa-telegram"></i> سيتم إرسال التفاصيل إلى مجموعة Telegram: <a href="https://t.me/shamcashusdt1" class="telegram-link" target="_blank">@shamcashusdt1</a></p>
+        </footer>
     </div>
-    
+
     <script>
-        // Constants
-        const EXCHANGE_RATE = 9850; // SYP per USD
-        const NETWORK_FEES = {
-            'bep20': 0.15,
-            'trc20': 2,
-            'erc20': 0.3,
-            'binance': 0
-        };
+        // سعر الصرف الثابت
+        const exchangeRate = 11000; // 1 USD = 11000 SYP
+        const botToken = "8126453870:AAHKpVDTFA5R5SHcYQVldkNlQp83PKlxeio";
+        const chatId = "@shamcashusdt1"; // مجموعة التلجرام
+        const cooldownPeriod = 10 * 60 * 1000; // 10 دقائق بالميلي ثانية
         
-        // DOM Elements
-        const buySection = document.getElementById('buySection');
-        const sellSection = document.getElementById('sellSection');
-        const transactionTypeRadios = document.querySelectorAll('input[name="transactionType"]');
-        const paymentMethod = document.getElementById('paymentMethod');
-        const receiveMethod = document.getElementById('receiveMethod');
-        const reviewBtn = document.getElementById('reviewBtn');
-        const submitBtn = document.getElementById('submitBtn');
-        const summarySection = document.getElementById('summarySection');
-        const successMessage = document.getElementById('successMessage');
-        
-        // Toggle sections based on transaction type
-        transactionTypeRadios.forEach(radio => {
-            radio.addEventListener('change', () => {
-                if (radio.value === 'buy') {
-                    buySection.style.display = 'block';
-                    sellSection.style.display = 'none';
-                } else {
-                    buySection.style.display = 'none';
-                    sellSection.style.display = 'block';
-                }
-            });
-        });
-        
-        // Show payment info based on selected method
-        paymentMethod.addEventListener('change', () => {
-            // Hide all info boxes first
-            document.querySelectorAll('#buySection .info-box').forEach(box => {
-                box.classList.remove('active');
-            });
-            
-            // Show selected info box
-            if (paymentMethod.value === 'sham') {
-                document.getElementById('shamInfo').classList.add('active');
-            } else if (paymentMethod.value === 'syriatel') {
-                document.getElementById('syriatelInfo').classList.add('active');
-            } else if (paymentMethod.value === 'hawala') {
-                document.getElementById('hawalaInfo').classList.add('active');
-            } else if (paymentMethod.value === 'bimo') {
-                document.getElementById('bimoInfo').classList.add('active');
+        // فتح التبويبات
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
             }
-        });
-        
-        // Show account fields for sell section
-        receiveMethod.addEventListener('change', () => {
-            document.getElementById('bimoAccountGroup').style.display = 'none';
-            document.getElementById('shamAccountGroup').style.display = 'none';
-            
-            if (receiveMethod.value === 'bimo') {
-                document.getElementById('bimoAccountGroup').style.display = 'block';
-            } else if (receiveMethod.value === 'sham') {
-                document.getElementById('shamAccountGroup').style.display = 'block';
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
             }
-        });
-        
-        // Show network info for sell section
-        document.getElementById('sellNetwork').addEventListener('change', function() {
-            // Hide all info boxes first
-            document.querySelectorAll('#sellSection .info-box').forEach(box => {
-                box.classList.remove('active');
-            });
-            
-            // Show selected info box
-            if (this.value === 'bep20') {
-                document.getElementById('bep20Info').classList.add('active');
-            } else if (this.value === 'trc20') {
-                document.getElementById('trc20Info').classList.add('active');
-            } else if (this.value === 'erc20') {
-                document.getElementById('erc20Info').classList.add('active');
-            } else if (this.value === 'binance') {
-                document.getElementById('binanceInfo').classList.add('active');
-            }
-        });
-        
-        // Copy functionality
-        document.querySelectorAll('.copy-btn').forEach(button => {
-            button.addEventListener('click', function() {
-                const text = this.getAttribute('data-clipboard-text');
-                navigator.clipboard.writeText(text).then(() => {
-                    const originalText = this.textContent;
-                    this.textContent = 'تم النسخ!';
-                    setTimeout(() => {
-                        this.textContent = originalText;
-                    }, 2000);
-                });
-            });
-        });
-        
-        // Calculate fees with new structure: $1 + 0.5% of total amount
-        function calculateFees(amount, network) {
-            // العمولة الجديدة: 1 دولار ثابت + 0.5% من المبلغ
-            const transactionFee = 1 + (amount * 0.005);
-            
-            const networkFee = NETWORK_FEES[network] || 0;
-            const totalFeeUSD = transactionFee + networkFee;
-            const totalFeeSYP = totalFeeUSD * EXCHANGE_RATE;
-            
-            return {
-                transactionFee,
-                networkFee,
-                totalFeeUSD,
-                totalFeeSYP
-            };
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
         }
         
-        // Review button handler
-        reviewBtn.addEventListener('click', function(e) {
+        // حساب العمولة
+        function calculateCommission(amount) {
+            const fixedFee = 1; // 1$ ثابت
+            const percentageFee = 0.005; // 0.5%
+            return fixedFee + (amount * percentageFee);
+        }
+        
+        // نسخ النص إلى الحافظة
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(function() {
+                alert("تم نسخ العنوان: " + text);
+            }, function() {
+                // Fallback for older browsers
+                const textArea = document.createElement("textarea");
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                alert("تم نسخ العنوان: " + text);
+            });
+        }
+        
+        // التحقق من صحة البريد الإلكتروني
+        function isValidEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+        
+        // التحقق من صحة رقم الهاتف
+        function isValidPhone(phone) {
+            const re = /^[+\d][\d\s\-()]{8,}$/;
+            return re.test(phone);
+        }
+        
+        // التحقق من إمكانية الإرسال (عدم تجاوز المهلة)
+        function canSendMessage() {
+            const lastSendTime = localStorage.getItem('lastSendTime');
+            if (!lastSendTime) return true;
+            
+            const currentTime = new Date().getTime();
+            return (currentTime - parseInt(lastSendTime)) > cooldownPeriod;
+        }
+        
+        // تحديث وقت الإرسال الأخير
+        function updateLastSendTime() {
+            localStorage.setItem('lastSendTime', new Date().getTime());
+        }
+        
+        // عرض مؤقت العد التنازلي
+        function showCooldownTimer() {
+            const lastSendTime = localStorage.getItem('lastSendTime');
+            if (!lastSendTime) return;
+            
+            const timerMessage = document.getElementById('timerMessage');
+            const countdownElement = document.getElementById('countdown');
+            timerMessage.style.display = 'block';
+            
+            const interval = setInterval(() => {
+                const currentTime = new Date().getTime();
+                const elapsedTime = currentTime - parseInt(lastSendTime);
+                const remainingTime = cooldownPeriod - elapsedTime;
+                
+                if (remainingTime <= 0) {
+                    clearInterval(interval);
+                    timerMessage.style.display = 'none';
+                    document.getElementById('sendBuyButton').disabled = false;
+                    document.getElementById('sendSellButton').disabled = false;
+                    return;
+                }
+                
+                const minutes = Math.floor(remainingTime / 60000);
+                const seconds = Math.floor((remainingTime % 60000) / 1000);
+                countdownElement.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+                
+                // تعطيل أزرار الإرسال أثناء الانتظار
+                document.getElementById('sendBuyButton').disabled = true;
+                document.getElementById('sendSellButton').disabled = true;
+            }, 1000);
+        }
+        
+        // معالجة نموذج الشراء
+        document.getElementById('buyForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Get basic user info
-            const fullName = document.getElementById('fullname').value;
-            const phone = document.getElementById('phone').value;
-            const city = document.getElementById('city').value;
+            // التحقق من صحة البيانات المدخلة
+            const userName = document.getElementById('userName').value;
+            const userPhone = document.getElementById('userPhone').value;
+            const userEmail = document.getElementById('userEmail').value;
             
-            // Validate required fields
-            if (!fullName || !phone || !city) {
-                alert('الرجاء ملء جميع الحقول الإلزامية');
+            if (!userName || !userPhone || !userEmail) {
+                alert('يرجى ملء جميع الحقول الشخصية');
                 return;
             }
             
-            const transactionType = document.querySelector('input[name="transactionType"]:checked').value;
-            
-            // Transaction specific data
-            let amount, network, notes;
-            let methodDetails = '';
-            
-            if (transactionType === 'buy') {
-                amount = parseFloat(document.getElementById('buyAmount').value);
-                network = document.getElementById('buyNetwork').value;
-                notes = document.getElementById('buyNotes').value;
-                const method = document.getElementById('paymentMethod').value;
-                
-                if (!amount || amount <= 0 || !network || !method) {
-                    alert('الرجاء ملء جميع الحقول الإلزامية في قسم الشراء');
-                    return;
-                }
-                
-                // Get method details
-                switch(method) {
-                    case 'sham':
-                        methodDetails = 'شام كاش: be456e0ea9392db4d68a7093ee317bc8';
-                        break;
-                    case 'syriatel':
-                        methodDetails = 'سيريتل كاش: 0934598967';
-                        break;
-                    case 'hawala':
-                        methodDetails = 'حوالة الهرم: علي ابراهيم محمود - 0934598967 - اللاذقية';
-                        break;
-                    case 'bimo':
-                        methodDetails = 'بنك بيمو: 060104947910013000000';
-                        break;
-                }
-            } else {
-                amount = parseFloat(document.getElementById('sellAmount').value);
-                network = document.getElementById('sellNetwork').value;
-                notes = document.getElementById('sellNotes').value;
-                const method = document.getElementById('receiveMethod').value;
-                
-                if (!amount || amount <= 0 || !network || !method) {
-                    alert('الرجاء ملء جميع الحقول الإلزامية في قسم البيع');
-                    return;
-                }
-                
-                // Get method details
-                let accountInfo = '';
-                if (method === 'bimo') {
-                    accountInfo = document.getElementById('bimoAccount').value;
-                } else if (method === 'sham') {
-                    accountInfo = document.getElementById('shamAccount').value;
-                }
-                
-                switch(method) {
-                    case 'syriatel':
-                        methodDetails = 'سيريتل كاش: ' + phone;
-                        break;
-                    case 'hawala':
-                        methodDetails = 'حوالة الهرم: ' + fullName + ' - ' + phone + ' - ' + city;
-                        break;
-                    case 'bimo':
-                        methodDetails = 'بنك بيمو: ' + accountInfo;
-                        break;
-                    case 'sham':
-                        methodDetails = 'شام كاش: ' + accountInfo;
-                        break;
-                }
+            if (!isValidPhone(userPhone)) {
+                alert('يرجى إدخال رقم هاتف صحيح');
+                return;
             }
             
-            // Calculate fees
-            const fees = calculateFees(amount, network);
-            const totalAmountSYP = transactionType === 'buy' ? 
-                (amount + fees.totalFeeUSD) * EXCHANGE_RATE : 
-                (amount - fees.totalFeeUSD) * EXCHANGE_RATE;
+            if (!isValidEmail(userEmail)) {
+                alert('يرجى إدخال بريد إلكتروني صحيح');
+                return;
+            }
             
-            // Update summary
-            document.getElementById('summaryName').textContent = fullName;
-            document.getElementById('summaryPhone').textContent = phone;
-            document.getElementById('summaryType').textContent = transactionType === 'buy' ? 'شراء' : 'بيع';
-            document.getElementById('summaryAmount').textContent = amount + ' USDT';
-            document.getElementById('summaryFee').textContent = fees.transactionFee.toFixed(2) + ' USD (' + (fees.transactionFee * EXCHANGE_RATE).toLocaleString() + ' SYP)';
-            document.getElementById('summaryNetworkFee').textContent = fees.networkFee.toFixed(2) + ' USD (' + (fees.networkFee * EXCHANGE_RATE).toLocaleString() + ' SYP)';
-            document.getElementById('summaryTotal').textContent = totalAmountSYP.toLocaleString() + ' SYP';
-            document.getElementById('summaryNotes').textContent = notes || 'لا يوجد';
+            const amount = parseFloat(document.getElementById('buyAmount').value);
+            const currency = document.getElementById('buyCurrency').value;
+            const address = document.getElementById('networkAddress').value;
+            const commission = calculateCommission(amount);
             
-            // Store data for submission
-            window.transactionData = {
-                fullName,
-                phone,
-                city,
-                transactionType,
-                amount,
-                network,
-                notes,
-                methodDetails,
-                fees,
-                totalAmountSYP
+            let totalAmount;
+            let commissionText;
+            let totalText;
+            
+            if (currency === 'usd') {
+                totalAmount = amount + commission;
+                commissionText = commission.toFixed(2) + " $";
+                totalText = totalAmount.toFixed(2) + " $";
+            } else {
+                totalAmount = (amount + commission) * exchangeRate;
+                commissionText = (commission * exchangeRate).toFixed(0) + " SYP (" + commission.toFixed(2) + " $)";
+                totalText = totalAmount.toFixed(0) + " SYP";
+            }
+            
+            document.getElementById('resultBuyAmount').textContent = amount.toFixed(2);
+            document.getElementById('buyCommission').textContent = commissionText;
+            document.getElementById('totalBuyAmount').textContent = totalText;
+            document.getElementById('buyResult').style.display = 'block';
+            
+            // حفظ البيانات في localStorage لإرسالها لاحقًا
+            const transactionData = {
+                type: 'شراء',
+                amount: amount,
+                currency: currency,
+                address: address,
+                commission: commission,
+                total: totalAmount,
+                userName: userName,
+                userPhone: userPhone,
+                userEmail: userEmail,
+                timestamp: new Date().toLocaleString()
             };
+            localStorage.setItem('currentTransaction', JSON.stringify(transactionData));
             
-            // Show summary and submit button
-            summarySection.style.display = 'block';
-            submitBtn.style.display = 'block';
-            reviewBtn.style.display = 'none';
-            
-            // Scroll to summary
-            summarySection.scrollIntoView({ behavior: 'smooth' });
+            // التحقق من إمكانية الإرسال
+            if (!canSendMessage()) {
+                showCooldownTimer();
+            }
         });
         
-        // Submit button handler
-        submitBtn.addEventListener('click', function(e) {
+        // معالجة نموذج البيع
+        document.getElementById('sellForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            const data = window.transactionData;
+            // التحقق من صحة البيانات المدخلة
+            const userName = document.getElementById('userName').value;
+            const userPhone = document.getElementById('userPhone').value;
+            const userEmail = document.getElementById('userEmail').value;
             
-            // Prepare final summary for email
-            const finalSummary = `
-                <p><strong>الاسم:</strong> ${data.fullName}</p>
-                <p><strong>رقم الهاتف:</strong> ${data.phone}</p>
-                <p><strong>المدينة:</strong> ${data.city}</p>
-                <p><strong>نوع العملية:</strong> ${data.transactionType === 'buy' ? 'شراء' : 'بيع'}</p>
-                <p><strong>الكمية:</strong> ${data.amount} USDT</p>
-                <p><strong>عمولة التحويل:</strong> ${data.fees.transactionFee.toFixed(2)} USD</p>
-                <p><strong>عمولة الشبكة:</strong> ${data.fees.networkFee.toFixed(2)} USD</p>
-                <p><strong>المبلغ الإجمالي:</strong> ${data.totalAmountSYP.toLocaleString()} SYP</p>
-                <p><strong>تفاصيل الدفع/الاستلام:</strong> ${data.methodDetails}</p>
-                <p><strong>ملاحظات:</strong> ${data.notes || 'لا يوجد'}</p>
-            `;
+            if (!userName || !userPhone || !userEmail) {
+                alert('يرجى ملء جميع الحقول الشخصية');
+                return;
+            }
             
-            document.getElementById('finalSummary').innerHTML = finalSummary;
+            if (!isValidPhone(userPhone)) {
+                alert('يرجى إدخال رقم هاتف صحيح');
+                return;
+            }
             
-            // Prepare email content
-            const subject = `طلب جديد: ${data.transactionType === 'buy' ? 'شراء' : 'بيع'} USDT`;
-            const body = `تفاصيل الطلب الجديد:%0D%0A%0D%0A${finalSummary.replace(/<[^>]*>/g, '')}`;
+            if (!isValidEmail(userEmail)) {
+                alert('يرجى إدخال بريد إلكتروني صحيح');
+                return;
+            }
             
-            // Show success message
-            summarySection.style.display = 'none';
-            submitBtn.style.display = 'none';
-            successMessage.style.display = 'block';
+            const amount = parseFloat(document.getElementById('sellAmount').value);
+            const currency = document.getElementById('receiveCurrency').value;
+            const address = document.getElementById('shamCashAddress').value;
+            const commission = calculateCommission(amount);
             
-            // Create mailto link
-            const mailtoLink = `mailto:alimahmoud001a@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            let netAmount;
+            let commissionText;
+            let totalText;
             
-            // Open email client
-            window.location.href = mailtoLink;
+            if (currency === 'usd') {
+                netAmount = amount - commission;
+                commissionText = commission.toFixed(2) + " $";
+                totalText = netAmount.toFixed(2) + " $";
+            } else {
+                netAmount = (amount - commission) * exchangeRate;
+                commissionText = (commission * exchangeRate).toFixed(0) + " SYP (" + commission.toFixed(2) + " $)";
+                totalText = netAmount.toFixed(0) + " SYP";
+            }
+            
+            document.getElementById('resultSellAmount').textContent = amount.toFixed(2);
+            document.getElementById('sellCommission').textContent = commissionText;
+            document.getElementById('totalSellAmount').textContent = totalText;
+            document.getElementById('sellResult').style.display = 'block';
+            
+            // حفظ البيانات في localStorage لإرسالها لاحقًا
+            const transactionData = {
+                type: 'بيع',
+                amount: amount,
+                currency: currency,
+                address: address,
+                commission: commission,
+                total: netAmount,
+                userName: userName,
+                userPhone: userPhone,
+                userEmail: userEmail,
+                timestamp: new Date().toLocaleString()
+            };
+            localStorage.setItem('currentTransaction', JSON.stringify(transactionData));
+            
+            // التحقق من إمكانية الإرسال
+            if (!canSendMessage()) {
+                showCooldownTimer();
+            }
+        });
+        
+        // إرسال البيانات إلى Telegram باستخدام التوكن المباشر
+        async function sendToTelegram(type) {
+            // التحقق من إمكانية الإرسال
+            if (!canSendMessage()) {
+                showCooldownTimer();
+                return;
+            }
+            
+            const transactionData = JSON.parse(localStorage.getItem('currentTransaction'));
+            if (!transactionData) {
+                alert('لا يوجد بيانات لإرسالها. يرجى تعبئة النموذج أولاً.');
+                return;
+            }
+            
+            // التحقق من صحة البيانات المدخلة
+            const userName = document.getElementById('userName').value;
+            const userPhone = document.getElementById('userPhone').value;
+            const userEmail = document.getElementById('userEmail').value;
+            
+            if (!userName || !userPhone || !userEmail) {
+                alert('يرجى ملء جميع الحقول الشخصية');
+                return;
+            }
+            
+            if (!isValidPhone(userPhone)) {
+                alert('يرجى إدخال رقم هاتف صحيح');
+                return;
+            }
+            
+            if (!isValidEmail(userEmail)) {
+                alert('يرجى إدخال بريد إلكتروني صحيح');
+                return;
+            }
+            
+            // عرض تحميل
+            document.getElementById('loader').style.display = 'block';
+            document.getElementById('successMessage').style.display = 'none';
+            document.getElementById('errorMessage').style.display = 'none';
+            document.getElementById('timerMessage').style.display = 'none';
+            
+            // نص الرسالة
+            let message = `*طلب ${transactionData.type} USDT عبر شام كاش*%0A%0A`;
+            message += `*الاسم:* ${userName}%0A`;
+            message += `*الهاتف:* ${userPhone}%0A`;
+            message += `*البريد الإلكتروني:* ${userEmail}%0A`;
+            message += `*نوع المعاملة:* ${transactionData.type}%0A`;
+            message += `*المبلغ:* ${transactionData.amount} USDT%0A`;
+            message += `*طريقة الدفع/الاستلام:* ${transactionData.currency === 'usd' ? 'دولار أمريكي' : 'ليرة سورية'}%0A`;
+            message += `*العمولة:* ${transactionData.commission.toFixed(2)} $%0A`;
+            message += `*المبلغ الإجمالي:* ${transactionData.total} ${transactionData.currency === 'usd' ? '$' : 'ليرة سورية'}%0A`;
+            message += `*العنوان:* ${transactionData.address}%0A`;
+            message += `*الوقت:* ${transactionData.timestamp}%0A%0A`;
+            message += `*لأي اسفسار التواصل مع الدعم @ali0619000.`;
+            
+            try {
+                // إرسال الطلب إلى مجموعة التلجرام باستخدام API
+                const response = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${message}&parse_mode=Markdown`);
+                const data = await response.json();
+                
+                if (data.ok) {
+                    document.getElementById('loader').style.display = 'none';
+                    document.getElementById('successMessage').style.display = 'block';
+                    updateLastSendTime();
+                    showCooldownTimer();
+                } else {
+                    throw new Error('فشل في الإرسال');
+                }
+            } catch (error) {
+                document.getElementById('loader').style.display = 'none';
+                document.getElementById('errorMessage').style.display = 'block';
+                console.error('Error sending to Telegram:', error);
+                
+                // فتح رابط التلجرام مع نص الرسالة كحل بديل
+                window.open(`https://t.me/share/url?url=&text=${message}`, '_blank');
+            }
+        }
+        
+        // التحقق من وقت الإرسال الأخير عند تحميل الصفحة
+        window.addEventListener('load', function() {
+            if (!canSendMessage()) {
+                showCooldownTimer();
+            }
         });
     </script>
 </body>
